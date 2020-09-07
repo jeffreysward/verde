@@ -6,6 +6,7 @@ import sphinx_rtd_theme
 import sphinx_gallery
 from sphinx_gallery.sorting import FileNameSortKey
 from verde.version import full_version
+from pygmt.sphinx_gallery import PyGMTScraper
 
 extensions = [
     "sphinx.ext.autodoc",
@@ -61,6 +62,7 @@ sphinx_gallery_conf = {
     "doc_module": "verde",
     # Insert links to documentation of objects in the examples
     "reference_url": {"verde": None},
+    "image_scrapers": (PyGMTScraper(),),
 }
 
 # Always show the source code that generates a plot

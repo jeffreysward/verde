@@ -10,7 +10,7 @@ data in blocks. For non-smooth data, like bathymetry, a blocked median filter
 is a good choice.
 """
 import matplotlib.pyplot as plt
-import cartopy.crs as ccrs
+import pygmt
 import numpy as np
 import verde as vd
 
@@ -27,14 +27,11 @@ lon, lat = coordinates
 print("Original data size:", data.bathymetry_m.size)
 print("Decimated data size:", bathymetry.size)
 
-# Make a plot of the decimated data using Cartopy
-plt.figure(figsize=(7, 6))
-ax = plt.axes(projection=ccrs.Mercator())
-ax.set_title("10' Block Median Bathymetry")
-# Plot the bathymetry as colored circles.
-plt.scatter(lon, lat, c=bathymetry, s=5, transform=ccrs.PlateCarree())
-plt.colorbar().set_label("meters")
-# Use a utility function to setup the tick labels and land feature
-vd.datasets.setup_baja_bathymetry_map(ax)
-plt.tight_layout()
-plt.show()
+# Make a plot of the decimated data using PyGMT
+fig = pygmt.Figure()
+fig.basemap(region=vd.get_region(coordinates), projection="M8i", frame=True)
+fig.coast(land="black", water="skyblue")
+pygmt.makecpt(cmap="viridis", series=[bathymetry.min(), bathymetry.max()])
+fig.plot(x=lon, y=lat, style="c0.2c", color=bathymetry, pen="black", cmap=True)
+fig.colorbar(frame='af+l"Depth (km)"')
+fig.show()
