@@ -73,7 +73,7 @@ parameters.
 
  .. code-block:: none
 
-    R² with defaults: 0.7960368854849694
+    R² with defaults: 0.7960368854832034
 
 
 
@@ -144,7 +144,7 @@ Now we can loop over the combinations and collect the scores for each parameter 
 
  .. code-block:: none
 
-    [-6.672752084450996, 0.4845403172681578, 0.8383522700290031, 0.8371988991060888, 0.8351153077295754, 0.8316607509400296, 0.849262993117369, 0.8418400888505818, 0.8371795091862098, 0.8412200336661682, 0.8529555082414106, 0.8521727667594355, 0.8401945161937409, 0.8330182923876521, 0.8441706458561657, 0.849114559135252]
+    [-6.67275208441671, 0.48454031726769103, 0.8383522700289767, 0.8371988991061311, 0.8351153077203957, 0.8316607509540047, 0.8492629930794038, 0.841840088857753, 0.8371795091874137, 0.8412200336703355, 0.8529555082436957, 0.8521727667576258, 0.8401945161938101, 0.8330182923874727, 0.8441706458564197, 0.8491145591358883]
 
 
 
@@ -170,8 +170,8 @@ The largest score will yield the best parameter combination.
 
  .. code-block:: none
 
-    Best score: 0.8529555082414106
-    Score with defaults: 0.7960368854849694
+    Best score: 0.8529555082436957
+    Score with defaults: 0.7960368854832034
     Best parameters: {'damping': 0.001, 'mindist': 50000.0}
 
 
@@ -196,7 +196,10 @@ list of ``damping`` and ``mindist`` parameters to try instead of only a single v
 .. code-block:: default
 
 
-    spline = vd.SplineCV(dampings=dampings, mindists=mindists,)
+    spline = vd.SplineCV(
+        dampings=dampings,
+        mindists=mindists,
+    )
 
 
 
@@ -251,7 +254,7 @@ scores, are stored in class attributes:
 
  .. code-block:: none
 
-    Highest score: 0.8529555082414106
+    Highest score: 0.8529555082436957
     Best damping: 0.001
     Best mindist: 50000.0
 
@@ -270,7 +273,7 @@ The cross-validated gridder can be used like any other gridder (including in
         spacing=spacing,
         projection=projection,
         dims=["latitude", "longitude"],
-        data_names=["temperature"],
+        data_names="temperature",
     )
     print(grid)
 
@@ -363,7 +366,7 @@ intermediate values in the scheduled computations.
 
  .. code-block:: none
 
-    Delayed scores: [Delayed('mean-57c25983-8a7a-4432-aaf5-2764bd3644df'), Delayed('mean-763a5ceb-4df0-4ec9-940f-6b062d9b8ce2'), Delayed('mean-53be4b28-f2fd-414e-a3f9-07d30d706227'), Delayed('mean-4436e8d6-8523-4160-9a30-32d10b03a2c2'), Delayed('mean-1eb12e99-e9c3-4248-a10e-4d3ae68bab54'), Delayed('mean-74700cf4-2f16-47ed-aea9-faf674196d16'), Delayed('mean-023fc86d-75a2-46f0-8145-4e5098d2ce0f'), Delayed('mean-6a8a2534-d44b-48c6-b72f-5ba18fc2c18d'), Delayed('mean-8417c90b-e303-42db-a61c-92b260a3009f'), Delayed('mean-ddf1b5a2-8735-4b86-967a-91af9ef2c426'), Delayed('mean-30847aac-2db9-4976-a18e-c65814ac7581'), Delayed('mean-04ce302d-9b80-4637-af07-fc015a6ff50d'), Delayed('mean-bb355a53-7c8d-4b21-a512-1a142bb903d5'), Delayed('mean-a9b2c5b2-0020-4960-9071-3dc7b231f081'), Delayed('mean-1d7f6ddc-e1e3-48e9-adf8-55e17d0c3c12'), Delayed('mean-1c87624b-d32f-48a3-bd05-41ad55cef63f')]
+    Delayed scores: [Delayed('mean-8dc751ac-8067-4906-99a2-d3cf198efdaa'), Delayed('mean-63964867-809d-47b8-b4f1-dc83df050419'), Delayed('mean-576b5bbe-0c6f-4ac6-8890-1e1fda9bbc7b'), Delayed('mean-8c10a854-b70e-4fdb-8bc9-1dd32b62f66a'), Delayed('mean-4839012b-db2c-44bd-b7ba-1fb636c04c1f'), Delayed('mean-8add8d36-678b-45b3-8a48-09c91e58e970'), Delayed('mean-e8e05cc7-fbad-43f5-a93c-7d80535160da'), Delayed('mean-75b8fc2e-528c-4728-8e4c-61528ad0549a'), Delayed('mean-418a78a1-94d0-4270-adb1-a76ce4921b79'), Delayed('mean-307be6ce-0dc9-4e9c-8a03-29a23fb540ef'), Delayed('mean-24b4c764-1af0-4a4e-98b4-6d7a1b11171b'), Delayed('mean-f1bedbb0-8d17-4f7c-a394-e1ca6868ad6f'), Delayed('mean-17c76290-1601-4ad6-b67b-c06d6fd115dc'), Delayed('mean-9af7d786-0def-4839-a128-306859a93df0'), Delayed('mean-25d021d4-e4ca-40a5-87d7-2f21c64b97d4'), Delayed('mean-f2890c75-bbd0-4859-96e3-90c7ebf45ee3')]
 
 
 
@@ -388,7 +391,7 @@ with the best configuration and see how it compares to the default result.
         spacing=spacing,
         projection=projection,
         dims=["latitude", "longitude"],
-        data_names=["temperature"],
+        data_names="temperature",
     )
 
 
@@ -432,7 +435,6 @@ Let's plot our grids side-by-side:
             data.longitude, data.latitude, ".k", markersize=1, transform=ccrs.PlateCarree()
         )
         vd.datasets.setup_texas_wind_map(ax)
-    plt.tight_layout()
     plt.show()
 
 
@@ -442,23 +444,6 @@ Let's plot our grids side-by-side:
     :alt: Defaults, Tuned
     :class: sphx-glr-single-img
 
-
-.. rst-class:: sphx-glr-script-out
-
- Out:
-
- .. code-block:: none
-
-    /home/travis/miniconda/envs/testing/lib/python3.6/site-packages/cartopy/mpl/geoaxes.py:782: MatplotlibDeprecationWarning: Passing the minor parameter of set_xticks() positionally is deprecated since Matplotlib 3.2; the parameter will become keyword-only two minor releases later.
-      return super(GeoAxes, self).set_xticks(xticks, minor)
-    /home/travis/miniconda/envs/testing/lib/python3.6/site-packages/cartopy/mpl/geoaxes.py:829: MatplotlibDeprecationWarning: Passing the minor parameter of set_yticks() positionally is deprecated since Matplotlib 3.2; the parameter will become keyword-only two minor releases later.
-      return super(GeoAxes, self).set_yticks(yticks, minor)
-    /home/travis/miniconda/envs/testing/lib/python3.6/site-packages/cartopy/mpl/geoaxes.py:782: MatplotlibDeprecationWarning: Passing the minor parameter of set_xticks() positionally is deprecated since Matplotlib 3.2; the parameter will become keyword-only two minor releases later.
-      return super(GeoAxes, self).set_xticks(xticks, minor)
-    /home/travis/miniconda/envs/testing/lib/python3.6/site-packages/cartopy/mpl/geoaxes.py:829: MatplotlibDeprecationWarning: Passing the minor parameter of set_yticks() positionally is deprecated since Matplotlib 3.2; the parameter will become keyword-only two minor releases later.
-      return super(GeoAxes, self).set_yticks(yticks, minor)
-    /home/travis/build/fatiando/verde/tutorials/model_selection.py:208: UserWarning: Tight layout not applied. The left and right margins cannot be made large enough to accommodate all axes decorations. 
-      plt.tight_layout()
 
 
 
@@ -470,7 +455,7 @@ wavelength features that we get from the defaults.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  3.278 seconds)
+   **Total running time of the script:** ( 0 minutes  3.900 seconds)
 
 
 .. _sphx_glr_download_tutorials_model_selection.py:
